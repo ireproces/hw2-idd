@@ -1,0 +1,3 @@
+Title: to Reason Efficiently with Discounted Reinforcement
+
+Abstract: Large reasoning models (LRMs) often consume excessive tokens, inflating computational cost and latency. We challenge the assumption that longer responses improve accuracy. By penalizing reasoning tokens using a discounted reinforcementlearningsetup (interpretable as a small token cost) and analyzing Blackwell optimality in restricted policy classes, we encourage concise yet accurate reasoning. Experiments confirm our theoretical results that this approach shortens chains of thought while preserving accuracy.△ Less
