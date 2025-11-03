@@ -29,13 +29,13 @@ public class TxtSearcher {
     private IndexSearcher searcher;
     private QueryParser titleParser;
     private QueryParser abstractParser;
-    private long totalDocs;
+    // private long totalDocs;
 
     public TxtSearcher(String indexPath) throws IOException {
         Directory dir = FSDirectory.open(Paths.get(indexPath));
         IndexReader reader = DirectoryReader.open(dir);
         searcher = new IndexSearcher(reader);
-        totalDocs = reader.numDocs();
+        // totalDocs = reader.numDocs();
 
         // Analyzer personalizzato per il titolo
         Analyzer titleAnalyzer = CustomAnalyzer.builder()
@@ -76,13 +76,13 @@ public class TxtSearcher {
                         abstractSearched = true;
                         break;
                     default:
-                        System.out.println("Invalid field. Valid fields are: title and abstract.");
+                        System.out.println("\nInvalid field. Valid fields are: title and abstract.\n");
                         return;
                 }
 
                 booleanQueryBuilder.add(query, BooleanClause.Occur.MUST);
             } else {
-                System.out.println("Invalid query format. Use 'title:term' or 'abstract:\"phrase\"'.");
+                System.out.println("\nInvalid query format. Use 'title:term', 'abstract:\"phrase\"' or 'title:x,abstract:y'.\n");
                 return;
             }
         }
@@ -91,12 +91,12 @@ public class TxtSearcher {
         TopDocs results = searcher.search(finalQuery, 10);
         long endTime = System.currentTimeMillis();
 
-        System.out.println("Found " + results.totalHits.value() + " documents.");
-
         long totalDocumentsReturned = results.totalHits.value();
 
         if (results.totalHits.value() > 0) {
             System.out.println("\n-----Documents-----");
+            System.out.println("Found " + results.totalHits.value() + " documents.\n");
+
             for (ScoreDoc hit : results.scoreDocs) {
                 Document doc = searcher.getIndexReader().storedFields().document(hit.doc);
 
@@ -107,8 +107,7 @@ public class TxtSearcher {
                 System.out.println("\n");
             }
         } else {
-            System.out.println("No documents found for the query.");
-            System.out.println("\n");
+            System.out.println("\nNo documents found for the query.\n");
         }
 
         // Copertura dei campi interrogati
@@ -119,7 +118,7 @@ public class TxtSearcher {
         // Statistiche di ricerca
         System.out.println("\n-----Search Statistics-----");
         System.out.printf("• Total documents returned: %d\n", totalDocumentsReturned);
-        System.out.printf("• Total documents in the index: %d\n", totalDocs);
+        // System.out.printf("• Total documents in the index: %d\n", totalDocs);
 
         double totalSeconds = (endTime - startTime) / 1000.0;
         System.out.printf("• Total time: %.2f seconds\n", totalSeconds);
@@ -136,11 +135,20 @@ public class TxtSearcher {
             TxtSearcher searcher = new TxtSearcher(indexPath);
 
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            System.out.println("Enter your query (es. 'title:term', 'abstract:\"phrase\"', 'title:x,abstract:y').");
-            System.out.println("Type 'exit' to exit.\n");
+            System.out.println("\nStarting...");
+            System.out.println("Enter your query ('title:term', 'abstract:\"phrase\"', 'title:x,abstract:y').");
+            System.out.println("Or type 'exit' to stop the search.\n");
 
             String line;
-            while (!(line = br.readLine()).equalsIgnoreCase("exit")) {
+            while (true) {
+                System.out.print("Query > ");
+
+                line = br.readLine();
+                if (line == null || line.equalsIgnoreCase("exit")) {
+                    System.out.println("Exiting...\n");
+                    break;
+                }
+
                 if (!line.trim().isEmpty()) searcher.search(line);
             }
 
