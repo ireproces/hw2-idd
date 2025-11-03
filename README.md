@@ -19,10 +19,10 @@ hw2-idd
 │   └── arxiv_page.html
 │   └── download.py
 ├── indexes_lucene/
-│   ├── _0.cfe
-│   ├── _0.cfs
-│   ├── _0.si
-│   ├── segments_1
+│   ├── _1.cfe
+│   ├── _1.cfs
+│   ├── _1.si
+│   ├── segments_2
 │   └── write.lock
 ├── txt-indexer-searcher/
 │   └── src/main/java/com/idd/util/
