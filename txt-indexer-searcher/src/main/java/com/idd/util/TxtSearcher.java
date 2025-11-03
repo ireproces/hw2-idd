@@ -82,7 +82,7 @@ public class TxtSearcher {
 
                 booleanQueryBuilder.add(query, BooleanClause.Occur.MUST);
             } else {
-                System.out.println("\nInvalid query format. Use 'title:term', 'abstract:\"phrase\"' or 'title:x,abstract:y'.\n");
+                System.out.println("\nInvalid query format. Use 'title:term', 'abstract:term', 'abstract:\"phrase\"' or 'title:x,abstract:y'.\n");
                 return;
             }
         }
@@ -136,7 +136,7 @@ public class TxtSearcher {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("\nStarting...");
-            System.out.println("Enter your query ('title:term', 'abstract:\"phrase\"', 'title:x,abstract:y').");
+            System.out.println("Enter your query ('title:term', 'abstract:term', 'abstract:\"phrase\"', 'title:x,abstract:y').");
             System.out.println("Or type 'exit' to stop the search.\n");
 
             String line;
