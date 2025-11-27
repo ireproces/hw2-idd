@@ -1,3 +1,0 @@
-Title: Tracing Distribution Shifts with Causal System Maps
-
-Abstract: Monitoringmachinelearning(ML) systems is hard, with standard practice focusing on detecting distribution shifts rather than their causes. Root-cause analysis often relies on manual tracing to determine whether a shift is caused by software faults, data-quality issues, or natural change. We propose ML System Maps -- causal maps that, through layered views, make explicit the propagation paths between the environment and the ML system's internals, enabling systematic attribution of distribution shifts. We outline the approach and a research agenda for its development and evaluation.△ Less
