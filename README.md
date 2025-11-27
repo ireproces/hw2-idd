@@ -12,18 +12,7 @@ Il programma è in grado di:
 ```
 hw2-idd
 ├── downloadfiles/
-│   └── papers_txt/
-│       ├── 001_Variational_Masked_Diffusion_Models.txt
-│       ├── 002_Track,_Inpaint,_Resplat:_Subject-driven_3D_and_4D_.txt
-│       └── ... (fino a 050)
-│   └── arxiv_page.html
 │   └── download.py
-├── indexes_lucene/
-│   ├── _1.cfe
-│   ├── _1.cfs
-│   ├── _1.si
-│   ├── segments_2
-│   └── write.lock
 ├── txt-indexer-searcher/
 │   └── src/main/java/com/idd/util/
 │       ├── TxtIndexer.java
@@ -33,6 +22,18 @@ hw2-idd
 ├── README.md
 └── requirements.txt
 ```
+
+---
+
+## 🚀 Run del progetto
+1. Clonare il repository in locale
+2. All'interno della directory `downloadfiles`, eseguire lo script python `download.py`
+3. Al termine dell'esecuzione dello script, all'interno della directory corrente, verranno creati:
+    - una directory `papers_txt` (contenente i 50 papers estratti)
+    - un file `arxiv_page.html` (pagina di archivio in html)
+4. All'interno della directory `txt-indexer-searcher`, eseguire la classe `TxtIndexer.java`. Questo creerà la directory `indexes_lucene` contenente i file di indicizzazione
+5. Sempre nella directory `txt-indexer-searcher`, eseguire la classe `TxtSearcher.java`
+6. Ora è possibile eseguire query sul motore di ricerca Lucene, per terminare digitare la keyword `exit`
 
 ---
 
@@ -56,13 +57,10 @@ Ogni paper viene salvato nella cartella `papers_txt/` con un nome normalizzato n
 La classe `TxtIndexer.java` scansiona tutti i file `.txt` contenuti nella directory locale `papers_txt`.\
 Da ognuno estrae:
 - **Titolo** $\to$ linea che segue la parola chiave `Title:`
-- **Abstract** $\to$ linee successive che seguono la parola chiave `Abstract:`
+- **Abstract** $\to$ linee che seguono la parola chiave `Abstract:`
 
-per creare un indice Lucene contenente i campi:
-- `title` (TextField, analizzato)
-- `abstract` (TextField, analizzato)
-- `filename` (StringField, non analizzato)
-- `path` (StringField, non analizzato)
+Successivamente, crea un indice Lucene contenente i campi:\
+`title`, `abstract`, `filename`, `path`
 
 Infine, stampa **statistiche sui tempi di indicizzazione**:
 - il numero totale di file indicizzati
@@ -79,9 +77,9 @@ La classe `TxtSearcher.java` supporta sia **term query** che **phrase query**. I
 Per ogni query mostra:
 - titolo, abstract e punteggio di rilevanza dei documenti trovati
 - i campi interrogati
-- alcune statistiche di ricerca (il numero di documenti trovati, il tempo totale di ricerca)
+- alcune statistiche di ricerca (come il numero di documenti trovati e il tempo totale di ricerca)
 
-Il programma continua a ricevere query finché l’utente non digita `exit`.
+Il programma continua a ricevere query finché l’utente non digita la keyword `exit`.
 
 ---
 
